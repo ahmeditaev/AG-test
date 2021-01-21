@@ -1,0 +1,41 @@
+@import "./src/kit/shared/styles/variables";
+
+.container {
+  min-width: 320px;
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.content {
+  display: flex;
+  padding: 50px 0 80px;
+  .sidebar {
+    max-width: 270px;
+    width: 100%;
+    margin-right: 30px;
+  }
+  .category-list {
+    &__item {
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+  }
+  .price-wrap {
+    position: relative;
+    .filter-button {
+      position: absolute;
+      right: 29px;
+      bottom: -7px;
+    }
+  }
+  .main {
+    flex-grow: 1;
+  }
+}
+
+.card-list {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: repeat(auto-fit,minMax(270px,1fr));
+}
