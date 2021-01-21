@@ -1,0 +1,20 @@
+@import "./src/kit/shared/styles/variables";
+
+.button {
+  display: block;
+  border: unset;
+  font-size: 14px;
+  font-family: $Montserrat;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: $main-color--bg;
+  opacity: 1;
+  transition: opacity .08s ease-in-out;
+  padding: 8px 27px;
+  &:hover {
+    opacity: .8;
+  }
+  &:focus {
+    outline: unset;
+  }
+}

@@ -1,0 +1,45 @@
+@import "./src/kit/shared/styles/variables";
+
+.checkbox-wrap {
+  position: relative;
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  .checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    &__icon {
+      position: relative;
+      display: block;
+      width: 16px;
+      height: 16px;
+      background: rgba(76,80,91,0);
+      margin-right: 8px;
+      &::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+    &__label {
+      display: block;
+      margin-right: 8px;
+    }
+    &__count {
+      display: block;
+      line-height: 19px;
+      font-family: $OpenSans;
+      color: $third-color--f;
+    }
+  }
+}

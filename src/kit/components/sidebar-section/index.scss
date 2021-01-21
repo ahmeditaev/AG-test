@@ -1,0 +1,13 @@
+@import "./src/kit/shared/styles/variables";
+
+.sidebar-section {
+  padding-bottom: 50px;
+  &__title {
+    font-size: 18px;
+    font-family: $Montserrat;
+    color: $secondary-color--f;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+}

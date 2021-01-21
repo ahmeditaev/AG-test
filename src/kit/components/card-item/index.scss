@@ -1,0 +1,83 @@
+@import "./src/kit/shared/styles/variables";
+
+.card-item {
+  position: relative;
+  border: 1px solid $main-color--border;
+  padding: 196px 20px 17px;
+  &:hover {
+    cursor: pointer;
+    transition: box-shadow .08s ease-in-out;
+    box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.15);
+    .image-wrap {
+      .overlay {
+        background: #1cb8ff;
+        opacity: 0.7;
+      }
+      img {
+        transform: scale(1.3);
+      }
+    }
+  }
+  .image-wrap {
+    position: absolute;
+    overflow: hidden;
+    top: -1px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: 180px;
+    font-size: 0;
+    .overlay {
+      display: block;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: display .08s ease-in-out;
+      background: rgba(0,0,0, .5);
+      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 100%);
+    }
+  }
+  .info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform .08s ease-in-out;
+  }
+  &__city {
+    position: absolute;
+    z-index: 2;
+    top: 150px;
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: 500;
+    line-height: 22px;
+  }
+  &__title {
+    font-size: 16px;
+    line-height: 22px;
+    font-family: $Montserrat;
+    color: $secondary-color--f;
+    margin-bottom: 17px;
+  }
+  &__category {
+    font-size: 13px;
+    line-height: 22px;
+    font-weight: 500;
+    color: $third-color--f;
+  }
+  &__price {
+    font-size: 16px;
+    line-height: 22px;
+    color: $fourth-color--f;
+    font-family: $Montserrat;
+  }
+}
