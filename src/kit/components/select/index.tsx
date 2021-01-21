@@ -1,23 +1,33 @@
 import React from 'react'
-import Select from 'react-select'
+import Select, {OptionsType, ValueType} from 'react-select'
 import {CUSTOM_SELECT_STYLES} from "./styles";
 
-interface CustomSelectProps {
+export interface OptionValues {
+  value: number | string
+  label: string
 }
 
-const options = [
-  {value: 'chocolate', label: 'Chocolate'},
-  {value: 'strawberry', label: 'Strawberry'},
-  {value: 'vanilla', label: 'Vanilla'}
-]
+interface CustomSelectProps {
+  onChange: (elem: OptionValues) => void
+  options: OptionsType<OptionValues>
+}
 
 const CustomSelect: React.FC<CustomSelectProps> = (props: CustomSelectProps) => {
-  // const {} = props
+  const {
+    onChange,
+    options
+  } = props
+
+  const handleChange = (e: ValueType<OptionValues, boolean>) => {
+    onChange(e as OptionValues)
+  }
+
   return (
     <Select
       placeholder="Choose a city"
       styles={CUSTOM_SELECT_STYLES}
       options={options}
+      onChange={handleChange}
     />
   )
 }

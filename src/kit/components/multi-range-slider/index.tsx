@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState} from 'react'
-import './index.scss'
 import { ThumbLeft, ThumbRight, Range } from './styledItems'
+
+import './index.scss'
 
 interface MultiRangeSliderProps {
   minValue?: number

@@ -8,7 +8,7 @@ interface CheckboxProps {
   isChecked: boolean
   label: string
   numberValue?: string
-  onClick: () => void
+  onChange: () => void
 }
 
 const Checkbox: React.FC<CheckboxProps> = (props: CheckboxProps) => {
@@ -17,7 +17,7 @@ const Checkbox: React.FC<CheckboxProps> = (props: CheckboxProps) => {
     isChecked,
     label,
     numberValue,
-    onClick,
+    onChange,
   } = props
 
   return (
@@ -26,7 +26,7 @@ const Checkbox: React.FC<CheckboxProps> = (props: CheckboxProps) => {
         id={id}
         type="checkbox"
         checked={isChecked}
-        onChange={onClick}
+        onChange={onChange}
       />
       <label className='checkbox' htmlFor={id}>
         <StyledCheckbox isChecked={isChecked} className="checkbox__icon" />

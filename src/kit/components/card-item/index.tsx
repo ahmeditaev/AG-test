@@ -3,7 +3,6 @@ import PreviewImage from './../../shared/img/preview-image.jpg'
 
 import './index.scss'
 
-
 interface CardItemProps {
   city: string
   title: string

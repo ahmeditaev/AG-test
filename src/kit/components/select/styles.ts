@@ -1,8 +1,9 @@
 import {CSSProperties} from "react";
 import {ControlProps} from "react-select";
 import {OptionTypeBase} from "react-select/src/types";
+import {StylesConfig} from "react-select/src/styles";
 
-export const CUSTOM_SELECT_STYLES = {
+export const CUSTOM_SELECT_STYLES: StylesConfig<any, boolean> = {
   indicatorSeparator: (styles: CSSProperties) => ({
     ...styles,
     display: 'none'
