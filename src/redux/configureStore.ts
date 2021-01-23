@@ -1,6 +1,7 @@
 import {applyMiddleware, combineReducers, compose, createStore, Reducer} from "redux";
 import { persistStore, persistReducer } from 'redux-persist'
-import Products from './reducers/Products'
+import {reducer as Products} from './Products'
+import {reducer as Cities} from './Cities'
 import thunk from "redux-thunk";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import storage from 'redux-persist/lib/storage';
@@ -11,7 +12,8 @@ const persistConfig: any = {
 }
 
 const reducers: Reducer = combineReducers({
-  Products
+  Products,
+  Cities
 })
 
 const middlewareEnhancer = applyMiddleware(thunk)
