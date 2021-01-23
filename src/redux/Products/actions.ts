@@ -8,6 +8,7 @@ import {
   IRequestProductsAction
 } from "./models";
 
+/////////////<<Fetch products>>/////////////
 const requestProductsActionCreator = (): IRequestProductsAction => ({
   type: productsTypes.PRODUCTS_REQUEST
 })
@@ -17,24 +18,27 @@ const receiveProductsActionCreator = (data: IProduct[]): IReceiveProductsAction 
   payload: data
 })
 
+const failureProductsActionCreator = (err: any): IFailureProductsAction => ({
+  type: productsTypes.PRODUCTS_FAILURE,
+  payload: { err }
+})
+/////////////End <<Fetch products>>/////////////
+
 const setFilterProductsActionCreator = (data: IProduct[]): IFilterProductsAction => ({
   type: productsTypes.PRODUCTS_FILTER,
   payload: data
 })
 
-const failureProductsActionCreator = (err: any): IFailureProductsAction => ({
-  type: productsTypes.PRODUCTS_FAILURE,
-  payload: { err }
-})
-
+/////////////<<Clear state>>/////////////
 const clearProductsActionCreator = (): IClearProductsAction => ({
   type: productsTypes.PRODUCTS_CLEAR
 })
+/////////////End <<Clear state>>/////////////
 
 export default {
   requestProductsActionCreator,
   receiveProductsActionCreator,
-  setFilterProductsActionCreator,
   failureProductsActionCreator,
+  setFilterProductsActionCreator,
   clearProductsActionCreator
 }

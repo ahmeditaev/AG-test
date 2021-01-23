@@ -1,7 +1,7 @@
 import {Dispatch} from "redux";
 import {citiesActions as actions} from "./index";
 
-const getAllCities = () => async (dispatch: Dispatch) => {
+const fetchCities = () => async (dispatch: Dispatch) => {
   dispatch(actions.requestCitiesActionCreator())
   try {
     const res = await fetch("http://localhost:8000/cities")
@@ -15,5 +15,5 @@ const getAllCities = () => async (dispatch: Dispatch) => {
 }
 
 export default {
-  getAllCities
+  fetchCities
 }
