@@ -8,7 +8,7 @@ export interface ICategory {
 export interface ICategoriesState {
   loading: boolean
   categories: ICategory[] | null
-  currentCategory: ICategory | null
+  selectedCategories: number[]
   error: any
 }
 
@@ -21,9 +21,9 @@ export interface IReceiveCategoriesAction {
   payload: ICategory[]
 }
 
-export interface ICurrentCategoryAction {
-  type: categoriesTypes.CHANGE_CURRENT_CATEGORY,
-  payload: ICategory
+export interface ISetSelectedCategoriesAction {
+  type: categoriesTypes.CHANGE_SELECTED_CATEGORIES,
+  payload: number[]
 }
 
 export interface IFailureCategoriesAction {
@@ -38,6 +38,6 @@ export interface IClearCategoriesAction {
 export type TCategoriesActionTypes =
   IRequestCategoriesAction |
   IReceiveCategoriesAction |
-  ICurrentCategoryAction |
+  ISetSelectedCategoriesAction |
   IFailureCategoriesAction |
   IClearCategoriesAction

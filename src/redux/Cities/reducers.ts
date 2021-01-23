@@ -8,7 +8,7 @@ const initialState: ICitiesState = {
   error: null
 }
 
-export default function citiesReducer(state = initialState, action: TCitiesActionTypes) {
+export default function citiesReducer(state = initialState, action: TCitiesActionTypes): ICitiesState {
   switch (action.type) {
     case citiesTypes.CITIES_REQUEST:
       return {
@@ -37,7 +37,8 @@ export default function citiesReducer(state = initialState, action: TCitiesActio
       return {
         loading: false,
         error: null,
-        products: null
+        cities: null,
+        currentCity: null
       }
     default:
       return state

@@ -8,7 +8,7 @@ const initialState: IProductsState = {
   error: null
 }
 
-export default function productsReducer(state = initialState, action: TProductsActionTypes) {
+export default function productsReducer(state = initialState, action: TProductsActionTypes): IProductsState {
   switch (action.type) {
     case productsTypes.PRODUCTS_REQUEST:
       return {
@@ -37,7 +37,8 @@ export default function productsReducer(state = initialState, action: TProductsA
       return {
         loading: false,
         error: null,
-        products: null
+        products: null,
+        filteredProducts: null
       }
     default:
       return state

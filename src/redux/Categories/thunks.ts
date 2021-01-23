@@ -1,4 +1,4 @@
-import {Dispatch} from "redux";
+import {Dispatch, Store} from "redux";
 import {categoriesActions as actions} from "./index";
 
 const fetchCategories = () => async (dispatch: Dispatch) => {
@@ -14,6 +14,22 @@ const fetchCategories = () => async (dispatch: Dispatch) => {
   }
 }
 
+const onChangeSelectedCategories = (value: number) => (dispatch: Dispatch, getState: () => any) => {
+  const state = getState()
+  const {selectedCategories} = state.Categories
+  const newSetOfSelectedCategories = new Set(selectedCategories)
+
+  if (newSetOfSelectedCategories.has(value)) {
+    newSetOfSelectedCategories.delete(value);
+    dispatch(actions.setSelectedCategoriesActionCreator(Array.from(newSetOfSelectedCategories) as number[]))
+  } else {
+    newSetOfSelectedCategories.add(value);
+    dispatch(actions.setSelectedCategoriesActionCreator(Array.from(newSetOfSelectedCategories) as number[]))
+  }
+
+}
+
 export default {
-  fetchCategories
+  fetchCategories,
+  onChangeSelectedCategories
 }

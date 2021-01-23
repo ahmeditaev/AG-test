@@ -4,11 +4,11 @@ import {categoriesTypes} from "./index";
 const initialState: ICategoriesState = {
   loading: false,
   categories: null,
-  currentCategory: null,
+  selectedCategories: [],
   error: null
 }
 
-export default function categoriesReducer(state = initialState, action: TCategoriesActionTypes) {
+export default function categoriesReducer(state = initialState, action: TCategoriesActionTypes): ICategoriesState {
   switch (action.type) {
     case categoriesTypes.CATEGORIES_REQUEST:
       return {
@@ -22,10 +22,10 @@ export default function categoriesReducer(state = initialState, action: TCategor
         error: null,
         categories: action.payload
       }
-    case categoriesTypes.CHANGE_CURRENT_CATEGORY:
+    case categoriesTypes.CHANGE_SELECTED_CATEGORIES:
       return {
         ...state,
-        currentCategory: action.payload
+        selectedCategories: action.payload
       }
     case categoriesTypes.CATEGORIES_FAILURE:
       return {
@@ -37,7 +37,8 @@ export default function categoriesReducer(state = initialState, action: TCategor
       return {
         loading: false,
         error: null,
-        categories: null
+        categories: null,
+        selectedCategories: []
       }
     default:
       return state

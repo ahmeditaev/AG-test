@@ -31,7 +31,7 @@ const Checkbox: React.FC<CheckboxProps> = (props: CheckboxProps) => {
       <label className='checkbox' htmlFor={id}>
         <StyledCheckbox isChecked={isChecked} className="checkbox__icon" />
         <span className="checkbox__label">{label}</span>
-        {!!numberValue && <span className="checkbox__count">({numberValue})</span>}
+        <span className="checkbox__count">({numberValue})</span>
       </label>
     </div>
   )

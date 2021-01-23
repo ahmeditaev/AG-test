@@ -3,9 +3,9 @@ import {
   ICategory,
   IRequestCategoriesAction,
   IReceiveCategoriesAction,
-  ICurrentCategoryAction,
+  ISetSelectedCategoriesAction,
   IFailureCategoriesAction,
-  IClearCategoriesAction
+  IClearCategoriesAction,
 } from "./models";
 
 /////////////<<Fetch Categories>>/////////////
@@ -24,8 +24,8 @@ const failureCategoriesActionCreator = (err: any): IFailureCategoriesAction => (
 })
 /////////////End <<Fetch Categories>>/////////////
 
-const setCurrentCategoryActionCreator = (data: ICategory): ICurrentCategoryAction => ({
-  type: categoriesTypes.CHANGE_CURRENT_CATEGORY,
+const setSelectedCategoriesActionCreator = (data: number[]): ISetSelectedCategoriesAction => ({
+  type: categoriesTypes.CHANGE_SELECTED_CATEGORIES,
   payload: data
 })
 
@@ -39,6 +39,6 @@ export default {
   requestCategoriesActionCreator,
   receiveCategoriesActionCreator,
   failureCategoriesActionCreator,
-  setCurrentCategoryActionCreator,
+  setSelectedCategoriesActionCreator,
   clearCategoriesActionCreator
 }
