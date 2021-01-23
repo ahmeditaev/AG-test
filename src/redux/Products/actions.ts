@@ -6,7 +6,7 @@ import {
   IProduct,
   IReceiveProductsAction,
   IRequestProductsAction
-} from "./interfaces";
+} from "./models";
 
 const requestProductsActionCreator = (): IRequestProductsAction => ({
   type: productsTypes.PRODUCTS_REQUEST

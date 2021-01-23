@@ -1,4 +1,4 @@
-import {ICitiesState, TCitiesActionTypes} from "./interfaces";
+import {ICitiesState, TCitiesActionTypes} from "./models";
 import {citiesTypes} from "./index";
 
 const initialState: ICitiesState = {

@@ -5,7 +5,7 @@ import {
   IFailureCitiesAction,
   IReceiveCitiesAction,
   IRequestCitiesAction
-} from "./interfaces";
+} from "./models";
 
 const requestCitiesActionCreator = (): IRequestCitiesAction => ({
   type: citiesTypes.CITIES_REQUEST

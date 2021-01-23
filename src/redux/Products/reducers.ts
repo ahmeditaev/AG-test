@@ -1,4 +1,4 @@
-import {IProductsState, TProductsActionTypes} from "./interfaces";
+import {IProductsState, TProductsActionTypes} from "./models";
 import {productsTypes} from "./index";
 
 const initialState: IProductsState = {
