@@ -1,10 +1,11 @@
 import {Dispatch, Store} from "redux";
 import {citiesActions as actions} from "./index";
+import {MAIN_API} from "../../constants/api";
 
 const fetchCities = () => async (dispatch: Dispatch) => {
   dispatch(actions.requestCitiesActionCreator())
   try {
-    const res = await fetch("http://localhost:8000/cities")
+    const res = await fetch(`${MAIN_API}cities`)
     const parsedData = await res.json()
     setTimeout(() => {
       dispatch(actions.receiveCitiesActionCreator(parsedData))

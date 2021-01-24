@@ -1,0 +1,1 @@
+export const MAIN_API = `https://my-json-server.typicode.com/ahmeditaev/AG-test-json-server/`
