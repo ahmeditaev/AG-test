@@ -59,6 +59,12 @@
       border: 2px solid $main-color--bg;
       border-radius: 50%;
       transform: translate(0, -6px);
+      &.left {
+        transform: translate(-16px, -6px);
+      }
+      &.right {
+        transform: translate(4px, -6px);
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, {ChangeEvent, useEffect, useState} from 'react'
 import { ThumbLeft, ThumbRight, Range } from './styledItems'
 
 import './index.scss'
@@ -6,33 +6,47 @@ import './index.scss'
 interface MultiRangeSliderProps {
   minValue?: number
   maxValue?: number
-  step?: number
+  onChange: (currentMinValue: number, currentMaxValue: number) => void
 }
 
 const MultiRangeSlider: React.FC<MultiRangeSliderProps> = (props: MultiRangeSliderProps) => {
   const {
+    onChange,
     minValue = 0,
-    maxValue = 200,
-    step = 20
+    maxValue = 200
   } = props
 
   const [inputLeftValue, setInputLeftValue] = useState(minValue)
   const [inputRightValue, setInputRightValue] = useState(maxValue)
-  const [inputLeftValueInPercentage, setInputLeftValueInPercentage] = useState(0)
-  const [inputRightValueInPercentage, setInputRightValueInPercentage] = useState(0)
+  const [inputLeftValueInPercentage, setInputLeftValueInPercentage] = useState(getThumbPosition(minValue)['left'])
+  const [inputRightValueInPercentage, setInputRightValueInPercentage] = useState(getThumbPosition(maxValue)['right'])
+
+  useEffect(() => {
+    onChange(inputLeftValue, inputRightValue)
+  }, [inputLeftValue, inputRightValue])
 
   const handleChangeLeftValue = (e: ChangeEvent<HTMLInputElement>) => {
-    const leftValue = Math.min(Number(e.target.value), inputRightValue - step)
-    const leftValueInPercentage = ((leftValue - minValue) / (maxValue - minValue)) * 100
+    const leftValue = Math.min(Number(e.target.value), inputRightValue - 1)
+    const position = getThumbPosition(leftValue)['left']
     setInputLeftValue(leftValue)
-    setInputLeftValueInPercentage(leftValueInPercentage)
+    setInputLeftValueInPercentage(position)
   }
 
   const handleChangeRightValue = (e: ChangeEvent<HTMLInputElement>) => {
-    const rightValue = Math.max(Number(e.target.value), inputLeftValue + step)
-    const rightValueInPercentage = ((rightValue - minValue) / (maxValue - minValue)) * 100
+    const rightValue = Math.max(Number(e.target.value), inputLeftValue + 1)
+    const position = getThumbPosition(rightValue)['right']
     setInputRightValue(rightValue)
-    setInputRightValueInPercentage(100 - rightValueInPercentage)
+    setInputRightValueInPercentage(position)
+  }
+
+  function getThumbPosition(val: number) {
+    const newValue = ((val - minValue) * 100 / (maxValue - minValue))
+    const newPosition = 16 - (newValue * 0.2)
+
+    return {
+      left: `calc(${newValue}% + ${newPosition}px)`,
+      right: `calc(100% - (${newValue}% + ${newPosition}px))`
+    }
   }
 
   return (
@@ -40,7 +54,6 @@ const MultiRangeSlider: React.FC<MultiRangeSliderProps> = (props: MultiRangeSlid
       <div className="multi-range-slider">
         <input
           type="range"
-          step={step}
           min={minValue}
           max={maxValue}
           value={inputLeftValue}
@@ -48,7 +61,6 @@ const MultiRangeSlider: React.FC<MultiRangeSliderProps> = (props: MultiRangeSlid
         />
         <input
           type="range"
-          step={step}
           min={minValue}
           max={maxValue}
           value={inputRightValue}
