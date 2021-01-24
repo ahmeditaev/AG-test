@@ -4,7 +4,6 @@ import {categoriesTypes} from "./index";
 const initialState: ICategoriesState = {
   loading: false,
   categories: null,
-  selectedCategories: [],
   error: null
 }
 
@@ -22,11 +21,6 @@ export default function categoriesReducer(state = initialState, action: TCategor
         error: null,
         categories: action.payload
       }
-    case categoriesTypes.CHANGE_SELECTED_CATEGORIES:
-      return {
-        ...state,
-        selectedCategories: action.payload
-      }
     case categoriesTypes.CATEGORIES_FAILURE:
       return {
         ...state,
@@ -37,8 +31,7 @@ export default function categoriesReducer(state = initialState, action: TCategor
       return {
         loading: false,
         error: null,
-        categories: null,
-        selectedCategories: []
+        categories: null
       }
     default:
       return state

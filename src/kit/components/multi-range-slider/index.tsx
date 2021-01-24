@@ -7,19 +7,21 @@ interface MultiRangeSliderProps {
   minValue?: number
   maxValue?: number
   onChange: (currentMinValue: number, currentMaxValue: number) => void
+  currentRange: {min: number, max: number}
 }
 
 const MultiRangeSlider: React.FC<MultiRangeSliderProps> = (props: MultiRangeSliderProps) => {
   const {
     onChange,
     minValue = 0,
-    maxValue = 200
+    maxValue = 200,
+    currentRange
   } = props
 
-  const [inputLeftValue, setInputLeftValue] = useState(minValue)
-  const [inputRightValue, setInputRightValue] = useState(maxValue)
-  const [inputLeftValueInPercentage, setInputLeftValueInPercentage] = useState(getComputedThumbPosition(minValue)['left'])
-  const [inputRightValueInPercentage, setInputRightValueInPercentage] = useState(getComputedThumbPosition(maxValue)['right'])
+  const [inputLeftValue, setInputLeftValue] = useState(currentRange.min)
+  const [inputRightValue, setInputRightValue] = useState(currentRange.max)
+  const [inputLeftValueInPercentage, setInputLeftValueInPercentage] = useState(getComputedThumbPosition(currentRange.min)['left'])
+  const [inputRightValueInPercentage, setInputRightValueInPercentage] = useState(getComputedThumbPosition(currentRange.max)['right'])
 
   useEffect(() => {
     onChange(inputLeftValue, inputRightValue)

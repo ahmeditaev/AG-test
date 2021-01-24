@@ -4,7 +4,6 @@ import {citiesTypes} from "./index";
 const initialState: ICitiesState = {
   loading: false,
   cities: null,
-  currentCity: null,
   error: null
 }
 
@@ -22,11 +21,6 @@ export default function citiesReducer(state = initialState, action: TCitiesActio
         error: null,
         cities: action.payload
       }
-    case citiesTypes.CHANGE_CURRENT_CITY:
-      return {
-        ...state,
-        currentCity: action.payload
-      }
     case citiesTypes.CITIES_FAILURE:
       return {
         ...state,
@@ -38,7 +32,6 @@ export default function citiesReducer(state = initialState, action: TCitiesActio
         loading: false,
         error: null,
         cities: null,
-        currentCity: null
       }
     default:
       return state

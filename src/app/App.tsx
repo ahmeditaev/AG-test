@@ -10,6 +10,7 @@ import {productsOperations} from '../redux/Products'
 import {citiesOperations} from "../redux/Cities";
 import {IProduct} from "../redux/Products/models"
 import {categoriesOperations} from "../redux/Categories";
+import {visibilityFilterOperations} from "../redux/Filters";
 import {transformValueToOptionValue} from "../utils/transformValueToOptionValue";
 import CategoryList from '../kit/components/category-list';
 
@@ -23,18 +24,22 @@ interface Props {
 
 const App: React.FC<Props> = (props: Props) => {
   const {fetchProducts} = productsOperations
-  const {fetchCities, onChangeCurrentCity} = citiesOperations
+  const {fetchCities} = citiesOperations
   const {fetchCategories} = categoriesOperations
+  const {onChangeCityFilter, onChangePriceFilter} = visibilityFilterOperations
 
   const productsState: any = useSelector<any>(state => state.Products)
   const citiesState: any = useSelector<any>(state => state.Cities)
   const categoriesState: any = useSelector<any>(state => state.Categories)
+  const visibilityFilterState: any = useSelector<any>(state => state.VisibilityFilter)
 
   const dispatch = useDispatch()
 
   const {products, loading: productsLoading} = productsState
-  const {cities, loading: citiesLoading, currentCity} = citiesState
+  const {cities, loading: citiesLoading} = citiesState
   const {categories, loading: categoriesLoading} = categoriesState
+
+  const {city: currentCity, price: currentPriceRange} = visibilityFilterState
 
   useEffect(() => {
     !products && dispatch(fetchProducts())
@@ -51,6 +56,11 @@ const App: React.FC<Props> = (props: Props) => {
   }
 
   const options: OptionsType<OptionValues> = cities.map(transformValueToOptionValue)
+  const availablePrices = products.map((item: IProduct) => item.price)
+  const defaultPriceRange = {
+    min: Math.min(...availablePrices),
+    max: Math.max(...availablePrices)
+  }
 
   return (
     <div className="App">
@@ -61,7 +71,7 @@ const App: React.FC<Props> = (props: Props) => {
               <CustomSelect
                 value={currentCity ? transformValueToOptionValue(currentCity) : null}
                 options={options}
-                onChange={(option: ValueType<OptionValues, boolean>) => dispatch(onChangeCurrentCity(option))}
+                onChange={(option: ValueType<OptionValues, boolean>) => dispatch(onChangeCityFilter(option))}
               />
             </SidebarSection>
             <SidebarSection title="Categories">
@@ -69,7 +79,12 @@ const App: React.FC<Props> = (props: Props) => {
             </SidebarSection>
             <SidebarSection title="Price">
               <div className="price-wrap">
-                <MultiRangeSlider/>
+                <MultiRangeSlider
+                  currentRange={currentPriceRange || defaultPriceRange}
+                  minValue={defaultPriceRange.min}
+                  maxValue={defaultPriceRange.max}
+                  onChange={(min, max) => dispatch(onChangePriceFilter({min, max}))}
+                />
                 <Button
                   className="filter-button"
                   title="Filter"

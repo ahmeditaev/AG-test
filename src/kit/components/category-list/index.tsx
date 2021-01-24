@@ -3,17 +3,19 @@ import {ICategory} from "../../../redux/Categories/models";
 import Checkbox from "../checkbox";
 import {IProduct} from "../../../redux/Products/models";
 import {useDispatch, useSelector} from "react-redux";
-import {categoriesOperations} from "../../../redux/Categories";
+import {visibilityFilterOperations} from "../../../redux/Filters";
 
 import './index.scss'
 
 const CategoryList: React.FC = () => {
   const categoriesState: any = useSelector<any>(state => state.Categories)
   const productsState: any = useSelector<any>(state => state.Products)
+  const visibilityFilterState: any = useSelector<any>(state => state.VisibilityFilter)
 
   const {products} = productsState
-  const {categories, selectedCategories} = categoriesState
-  const {onChangeSelectedCategories} = categoriesOperations
+  const {categories} = categoriesState
+  const {category: selectedCategories} = visibilityFilterState
+  const {onChangeCategoryFilter} = visibilityFilterOperations
 
   const dispatch = useDispatch()
 
@@ -21,7 +23,7 @@ const CategoryList: React.FC = () => {
     return null
   }
 
-  const handleChangeCategories = (value: number) => () => dispatch(onChangeSelectedCategories(value))
+  const handleChangeCategories = (value: number) => () => dispatch(onChangeCategoryFilter(value))
   return (
     <ul className="category-list">
       {categories.map((item: ICategory, idx: number) => (

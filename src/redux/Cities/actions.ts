@@ -1,7 +1,6 @@
 import {citiesTypes} from "./index";
 import {
   ICity, IClearCitiesAction,
-  ICurrentCityAction,
   IFailureCitiesAction,
   IReceiveCitiesAction,
   IRequestCitiesAction
@@ -23,11 +22,6 @@ const failureCitiesActionCreator = (err: any): IFailureCitiesAction => ({
 })
 /////////////End <<Fetch Cities>>/////////////
 
-const setCurrentCityActionCreator = (data: ICity): ICurrentCityAction => ({
-  type: citiesTypes.CHANGE_CURRENT_CITY,
-  payload: data
-})
-
 /////////////<<Clear state>>/////////////
 const clearCitiesActionCreator = (): IClearCitiesAction => ({
   type: citiesTypes.CITIES_CLEAR
@@ -38,6 +32,5 @@ export default {
   requestCitiesActionCreator,
   receiveCitiesActionCreator,
   failureCitiesActionCreator,
-  setCurrentCityActionCreator,
   clearCitiesActionCreator
 }

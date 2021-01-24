@@ -8,7 +8,6 @@ export interface ICity {
 export interface ICitiesState {
   loading: boolean
   cities: ICity[] | null
-  currentCity: ICity | null
   error: any
 }
 
@@ -19,11 +18,6 @@ export interface IRequestCitiesAction {
 export interface IReceiveCitiesAction {
   type: citiesTypes.CITIES_RECEIVE,
   payload: ICity[]
-}
-
-export interface ICurrentCityAction {
-  type: citiesTypes.CHANGE_CURRENT_CITY,
-  payload: ICity
 }
 
 export interface IFailureCitiesAction {
@@ -38,6 +32,5 @@ export interface IClearCitiesAction {
 export type TCitiesActionTypes =
   IRequestCitiesAction |
   IReceiveCitiesAction |
-  ICurrentCityAction |
   IFailureCitiesAction |
   IClearCitiesAction
