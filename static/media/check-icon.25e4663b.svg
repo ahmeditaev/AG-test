@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 8" width="10" height="8">
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #1cb8ff } 
+	</style>
+	<g id="body">
+		<g id="filters">
+			<g id="categories">
+				<g id="checkboxes">
+					<g id="checkbox_checked">
+						<path id="checked" class="shp0" d="M0.12 4.39C0.04 4.31 0 4.18 0 4.1C0 4.02 0.04 3.9 0.12 3.82L0.65 3.26C0.81 3.1 1.04 3.1 1.19 3.26L1.23 3.3L3.35 5.67C3.42 5.75 3.54 5.75 3.62 5.67L8.77 0.09L8.81 0.09L8.81 0.09C8.96 -0.07 9.19 -0.07 9.35 0.09L9.88 0.65C10.04 0.81 10.04 1.05 9.88 1.21L9.88 1.21L3.73 7.88C3.65 7.96 3.58 8 3.46 8C3.35 8 3.27 7.96 3.19 7.88L0.19 4.51L0.12 4.39L0.12 4.39Z" />
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>
