@@ -14,6 +14,7 @@ import {visibilityFilterOperations} from "../redux/Filters";
 import {transformValueToOptionValue} from "../utils/transformValueToOptionValue";
 import CategoryList from '../kit/components/category-list';
 import {ICategory} from "../redux/Categories/models";
+import {IFilters} from "../utils/filterArray";
 
 import './App.scss';
 
@@ -67,7 +68,7 @@ const App: React.FC = () => {
   }
 
   const handleFilterProducts = () => {
-    const collectedFilters = {
+    const collectedFilters: IFilters = {
       price: (price: number) => price >= currentPriceRange.min && price <= currentPriceRange.max,
       city: (city: number) => currentCity ? [currentCity.id].includes(city) : true,
       category: (category: number) => !!selectedCategories.length ?[...selectedCategories].includes(category) : true
