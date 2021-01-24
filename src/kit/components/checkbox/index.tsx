@@ -7,7 +7,7 @@ interface CheckboxProps {
   id: string
   isChecked: boolean
   label: string
-  numberValue?: string
+  numberValue?: number
   onChange: () => void
 }
 

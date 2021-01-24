@@ -2,24 +2,28 @@ import React from 'react'
 import {ICategory} from "../../../redux/Categories/models";
 import Checkbox from "../checkbox";
 import {IProduct} from "../../../redux/Products/models";
-import {useDispatch, useSelector} from "react-redux";
-import {visibilityFilterOperations} from "../../../redux/Filters";
+import {useDispatch} from "react-redux";
+import {visibilityFilterOperations, visibilityFilterSelector} from "../../../redux/Filters";
+import {useTypedSelector} from "../../../redux/configureStore";
+import {categoriesSelector} from "../../../redux/Categories";
+import {productsSelector} from "../../../redux/Products";
 
 import './index.scss'
 
 const CategoryList: React.FC = () => {
-  const categoriesState: any = useSelector<any>(state => state.Categories)
-  const productsState: any = useSelector<any>(state => state.Products)
-  const visibilityFilterState: any = useSelector<any>(state => state.VisibilityFilter)
+  const categoriesState = useTypedSelector(categoriesSelector.getCategoriesState)
+  const productsState = useTypedSelector(productsSelector.getProductsState)
+  const visibilityFilterState = useTypedSelector(visibilityFilterSelector.getVisibilityFilterState)
 
   const {products} = productsState
   const {categories} = categoriesState
-  const {category: selectedCategories} = visibilityFilterState
+  const {selectedCategories} = visibilityFilterState
+
   const {onChangeCategoryFilter} = visibilityFilterOperations
 
   const dispatch = useDispatch()
 
-  if (!categories.length) {
+  if (!categories || categories.length === 0) {
     return null
   }
 
@@ -32,7 +36,7 @@ const CategoryList: React.FC = () => {
             id={item.id.toString()}
             isChecked={selectedCategories.includes(item.id)}
             label={item.name}
-            numberValue={products.filter((product: IProduct) => product.category === item.id).length}
+            numberValue={products!.filter((product: IProduct) => product.category === item.id).length}
             onChange={handleChangeCategories(item.id)}
           />
         </li>
