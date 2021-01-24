@@ -1,4 +1,5 @@
 export {EVisibilityFilterActionTypes as visibilityFilterTypes} from './types'
 export {default as visibilityFilterActions} from './actions'
 export {default as reducer} from './reducers'
+export {default as visibilityFilterSelector} from './selectors'
 export {default as visibilityFilterOperations} from './thunks'

@@ -5,7 +5,7 @@ import MultiRangeSlider from "./../kit/components/multi-range-slider";
 import SidebarSection from '../kit/components/sidebar-section';
 import Button from '../kit/components/button';
 import {OptionsType, ValueType} from "react-select";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {productsOperations} from '../redux/Products'
 import {citiesOperations} from "../redux/Cities";
 import {IProduct} from "../redux/Products/models"
@@ -16,31 +16,31 @@ import CategoryList from '../kit/components/category-list';
 import {ICategory} from "../redux/Categories/models";
 import {IFilters} from "../utils/filterArray";
 import NoDataFound from '../kit/components/no-data-found';
+import {useTypedSelector} from "../redux/configureStore";
+import {productsSelector} from "../redux/Products";
+import {citiesSelector} from "../redux/Cities";
+import {categoriesSelector} from "../redux/Categories";
+import {visibilityFilterSelector} from "../redux/Filters";
 
 import './App.scss';
 
 const App: React.FC = () => {
+  const productsState = useTypedSelector(productsSelector.getProductsState)
+  const citiesState = useTypedSelector(citiesSelector.getCitiesState)
+  const categoriesState = useTypedSelector(categoriesSelector.getCategoriesState)
+  const visibilityFilterState = useTypedSelector(visibilityFilterSelector.getVisibilityFilterState)
+
   const {fetchProducts, filterProducts} = productsOperations
   const {fetchCities} = citiesOperations
   const {fetchCategories} = categoriesOperations
   const {onChangeCityFilter, onChangePriceFilter} = visibilityFilterOperations
 
-  const productsState: any = useSelector<any>(state => state.Products)
-  const citiesState: any = useSelector<any>(state => state.Cities)
-  const categoriesState: any = useSelector<any>(state => state.Categories)
-  const visibilityFilterState: any = useSelector<any>(state => state.VisibilityFilter)
+  const {products, loadingProducts, filteredProducts, error} = productsState
+  const {cities, loadingCities} = citiesState
+  const {categories, loadingCategories} = categoriesState
+  const {selectedCity, selectedPriceRange, selectedCategories} = visibilityFilterState
 
   const dispatch = useDispatch()
-
-  const {products, loading: productsLoading, filteredProducts, error} = productsState
-  const {cities, loading: citiesLoading} = citiesState
-  const {categories, loading: categoriesLoading} = categoriesState
-
-  const {
-    city: currentCity,
-    price: currentPriceRange,
-    category: selectedCategories
-  } = visibilityFilterState
 
   useEffect(() => {
     !products && dispatch(fetchProducts())
@@ -48,7 +48,7 @@ const App: React.FC = () => {
     !categories && dispatch(fetchCategories())
   }, [])
 
-  if (productsLoading || citiesLoading || categoriesLoading) {
+  if (loadingProducts || loadingCities || loadingCategories) {
     return <div>loading...</div>
   }
 
@@ -61,7 +61,7 @@ const App: React.FC = () => {
     )
   }
 
-  const options: OptionsType<OptionValues> = cities.map(transformValueToOptionValue)
+  const options: OptionsType<OptionValues> = cities && !!cities.length ? cities.map(transformValueToOptionValue) : []
   const availablePrices = products.map((item: IProduct) => item.price)
   const defaultPriceRange = {
     min: Math.min(...availablePrices),
@@ -70,8 +70,8 @@ const App: React.FC = () => {
 
   const handleFilterProducts = () => {
     const collectedFilters: IFilters = {
-      price: (price: number) => price >= currentPriceRange.min && price <= currentPriceRange.max,
-      city: (city: number) => currentCity ? [currentCity.id].includes(city) : true,
+      price: (price: number) => price >= selectedPriceRange!.min && price <= selectedPriceRange!.max,
+      city: (city: number) => selectedCity ? [selectedCity.id].includes(city) : true,
       category: (category: number) => !!selectedCategories.length ?[...selectedCategories].includes(category) : true
     }
     dispatch(filterProducts(collectedFilters))
@@ -84,7 +84,7 @@ const App: React.FC = () => {
           <div className="sidebar">
             <SidebarSection title="City">
               <CustomSelect
-                value={currentCity ? transformValueToOptionValue(currentCity) : null}
+                value={selectedCity ? transformValueToOptionValue(selectedCity) : null}
                 options={options}
                 onChange={(option: ValueType<OptionValues, boolean>) => dispatch(onChangeCityFilter(option))}
               />
@@ -95,7 +95,7 @@ const App: React.FC = () => {
             <SidebarSection title="Price">
               <div className="price-wrap">
                 <MultiRangeSlider
-                  currentRange={currentPriceRange || defaultPriceRange}
+                  currentRange={selectedPriceRange || defaultPriceRange}
                   minValue={defaultPriceRange.min}
                   maxValue={defaultPriceRange.max}
                   onChange={(min, max) => dispatch(onChangePriceFilter({min, max}))}
@@ -110,8 +110,10 @@ const App: React.FC = () => {
           </div>
           <div className="main">
             <div className="card-list">
-              {!!filteredProducts.length ? filteredProducts.map((item: IProduct, idx: number) => {
-                const findCategoryById = categories.find((category: ICategory) => item.category === category.id)
+              {filteredProducts && !!filteredProducts.length ? filteredProducts.map((item: IProduct, idx: number) => {
+                const findCategoryById = categories && !!categories.length ?
+                    categories.find((category: ICategory) => item.category === category.id) : null
+
                 return (
                   <CardItem
                     key={idx}

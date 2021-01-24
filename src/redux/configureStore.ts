@@ -7,6 +7,20 @@ import {reducer as VisibilityFilter} from './Filters'
 import thunk from "redux-thunk";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import storage from 'redux-persist/lib/storage';
+import {IProductsState} from "./Products/models";
+import {ICitiesState} from "./Cities/models";
+import {ICategoriesState} from "./Categories/models";
+import {IVisibilityFilterState} from "./Filters/models";
+import {TypedUseSelectorHook, useSelector} from "react-redux";
+
+export interface RootState {
+  Products: IProductsState,
+  Cities: ICitiesState,
+  Categories: ICategoriesState
+  VisibilityFilter: IVisibilityFilterState
+}
+
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
 
 const persistConfig: any = {
   key: "root",
