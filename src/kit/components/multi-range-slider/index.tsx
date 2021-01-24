@@ -27,6 +27,14 @@ const MultiRangeSlider: React.FC<MultiRangeSliderProps> = (props: MultiRangeSlid
     onChange(inputLeftValue, inputRightValue)
   }, [inputLeftValue, inputRightValue])
 
+  useEffect(() => {
+    setInputLeftValue(currentRange.min)
+    setInputRightValue(currentRange.max)
+
+    setInputLeftValueInPercentage(getComputedThumbPosition(currentRange.min)['left'])
+    setInputRightValueInPercentage(getComputedThumbPosition(currentRange.max)['right'])
+  }, [currentRange])
+
   const handleChangeLeftValue = (e: ChangeEvent<HTMLInputElement>) => {
     const leftValue = Math.min(Number(e.target.value), inputRightValue - 1)
     const leftThumbPosition = getComputedThumbPosition(leftValue)['left']

@@ -31,10 +31,10 @@ const App: React.FC = () => {
   const categoriesState = useTypedSelector(categoriesSelector.getCategoriesState)
   const visibilityFilterState = useTypedSelector(visibilityFilterSelector.getVisibilityFilterState)
 
-  const {fetchProducts, filterProducts} = productsOperations
+  const {fetchProducts, filterProducts, resetFilterProducts} = productsOperations
   const {fetchCities} = citiesOperations
   const {fetchCategories} = categoriesOperations
-  const {onChangeCityFilter, onChangePriceFilter} = visibilityFilterOperations
+  const {onChangeCityFilter, onChangePriceFilter, clearVisibilityFilter} = visibilityFilterOperations
 
   const {products, loadingProducts, filteredProducts, error} = productsState
   const {cities, loadingCities} = citiesState
@@ -70,12 +70,20 @@ const App: React.FC = () => {
   }
 
   const handleFilterProducts = () => {
+    const currentMinPrice = selectedPriceRange ? selectedPriceRange.min : defaultPriceRange.min
+    const currentMaxPrice = selectedPriceRange ? selectedPriceRange.max : defaultPriceRange.max
+
     const collectedFilters: IFilters = {
-      price: (price: number) => price >= selectedPriceRange!.min && price <= selectedPriceRange!.max,
+      price: (price: number) => price >= currentMinPrice && price <= currentMaxPrice,
       city: (city: number) => selectedCity ? [selectedCity.id].includes(city) : true,
       category: (category: number) => !!selectedCategories.length ?[...selectedCategories].includes(category) : true
     }
     dispatch(filterProducts(collectedFilters))
+  }
+
+  const handleResetFilters = () => {
+    dispatch(clearVisibilityFilter())
+    dispatch(resetFilterProducts())
   }
 
   return (
@@ -107,6 +115,11 @@ const App: React.FC = () => {
                   onClick={handleFilterProducts}
                 />
               </div>
+              <Button
+                className="reset-button"
+                title="Reset filter"
+                onClick={handleResetFilters}
+              />
             </SidebarSection>
           </div>
           <div className="main">

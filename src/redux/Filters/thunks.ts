@@ -3,6 +3,7 @@ import {visibilityFilterActions as actions} from "./index";
 import {ValueType} from "react-select";
 import {OptionValues} from "../../kit/components/select";
 import {ICityFilterState, IPriceFilterState} from "./models";
+import {RootState} from "../configureStore";
 
 const onChangeCityFilter = (option: ValueType<OptionValues, boolean>) => (dispatch: Dispatch) => {
   const selectedOption = (option as OptionValues)
@@ -15,7 +16,7 @@ const onChangeCityFilter = (option: ValueType<OptionValues, boolean>) => (dispat
   dispatch(actions.changeCityFilterActionCreator(value))
 }
 
-const onChangeCategoryFilter = (value: number) => (dispatch: Dispatch, getState: () => any) => {
+const onChangeCategoryFilter = (value: number) => (dispatch: Dispatch, getState: () => RootState) => {
   const state = getState()
   const {category: selectedCategories} = state.VisibilityFilter
   const newSetOfSelectedCategories = new Set(selectedCategories)
@@ -34,8 +35,13 @@ const onChangePriceFilter = (data: IPriceFilterState) => (dispatch: Dispatch) =>
   dispatch(actions.changePriceFilterActionCreator(data))
 }
 
+const clearVisibilityFilter = () => (dispatch: Dispatch) => {
+  dispatch(actions.clearFilterActionCreator())
+}
+
 export default {
   onChangeCityFilter,
   onChangeCategoryFilter,
-  onChangePriceFilter
+  onChangePriceFilter,
+  clearVisibilityFilter
 }
