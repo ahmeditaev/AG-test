@@ -15,6 +15,7 @@ import {transformValueToOptionValue} from "../utils/transformValueToOptionValue"
 import CategoryList from '../kit/components/category-list';
 import {ICategory} from "../redux/Categories/models";
 import {IFilters} from "../utils/filterArray";
+import NoDataFound from '../kit/components/no-data-found';
 
 import './App.scss';
 
@@ -120,9 +121,7 @@ const App: React.FC = () => {
                     price={item.price}
                   />
                 )
-              }) : (
-                <p>No data found</p>
-              )}
+              }) : <NoDataFound />}
             </div>
           </div>
         </div>
