@@ -20,7 +20,8 @@ export default function productsReducer(state = initialState, action: TProductsA
         ...state,
         loading: false,
         error: null,
-        products: action.payload
+        products: action.payload,
+        filteredProducts: action.payload
       }
     case productsTypes.PRODUCTS_FILTER:
       return {
@@ -31,7 +32,7 @@ export default function productsReducer(state = initialState, action: TProductsA
       return {
         ...state,
         loading: false,
-        error: action.payload.error
+        error: action.payload.err
       }
     case productsTypes.PRODUCTS_CLEAR:
       return {

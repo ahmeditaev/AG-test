@@ -13,17 +13,12 @@ import {categoriesOperations} from "../redux/Categories";
 import {visibilityFilterOperations} from "../redux/Filters";
 import {transformValueToOptionValue} from "../utils/transformValueToOptionValue";
 import CategoryList from '../kit/components/category-list';
-
-import './App.scss';
 import {ICategory} from "../redux/Categories/models";
 
-interface Props {
+import './App.scss';
 
-}
-
-
-const App: React.FC<Props> = (props: Props) => {
-  const {fetchProducts} = productsOperations
+const App: React.FC = () => {
+  const {fetchProducts, filterProducts} = productsOperations
   const {fetchCities} = citiesOperations
   const {fetchCategories} = categoriesOperations
   const {onChangeCityFilter, onChangePriceFilter} = visibilityFilterOperations
@@ -35,11 +30,15 @@ const App: React.FC<Props> = (props: Props) => {
 
   const dispatch = useDispatch()
 
-  const {products, loading: productsLoading} = productsState
+  const {products, loading: productsLoading, filteredProducts, error} = productsState
   const {cities, loading: citiesLoading} = citiesState
   const {categories, loading: categoriesLoading} = categoriesState
 
-  const {city: currentCity, price: currentPriceRange} = visibilityFilterState
+  const {
+    city: currentCity,
+    price: currentPriceRange,
+    category: selectedCategories
+  } = visibilityFilterState
 
   useEffect(() => {
     !products && dispatch(fetchProducts())
@@ -52,7 +51,12 @@ const App: React.FC<Props> = (props: Props) => {
   }
 
   if (!products || products.length === 0) {
-    return <div>No data</div>
+    return (
+      <div>
+        <p>No data</p>
+        <p>{error || ''}</p>
+      </div>
+    )
   }
 
   const options: OptionsType<OptionValues> = cities.map(transformValueToOptionValue)
@@ -60,6 +64,15 @@ const App: React.FC<Props> = (props: Props) => {
   const defaultPriceRange = {
     min: Math.min(...availablePrices),
     max: Math.max(...availablePrices)
+  }
+
+  const handleFilterProducts = () => {
+    const collectedFilters = {
+      price: (price: number) => price >= currentPriceRange.min && price <= currentPriceRange.max,
+      city: (city: number) => currentCity ? [currentCity.id].includes(city) : true,
+      category: (category: number) => !!selectedCategories.length ?[...selectedCategories].includes(category) : true
+    }
+    dispatch(filterProducts(collectedFilters))
   }
 
   return (
@@ -88,14 +101,14 @@ const App: React.FC<Props> = (props: Props) => {
                 <Button
                   className="filter-button"
                   title="Filter"
-                  onClick={() => console.log('check')}
+                  onClick={handleFilterProducts}
                 />
               </div>
             </SidebarSection>
           </div>
           <div className="main">
             <div className="card-list">
-              {products.map((item: IProduct, idx: number) => {
+              {!!filteredProducts.length ? filteredProducts.map((item: IProduct, idx: number) => {
                 const findCategoryById = categories.find((category: ICategory) => item.category === category.id)
                 return (
                   <CardItem
@@ -106,7 +119,9 @@ const App: React.FC<Props> = (props: Props) => {
                     price={item.price}
                   />
                 )
-              })}
+              }) : (
+                <p>No data found</p>
+              )}
             </div>
           </div>
         </div>
