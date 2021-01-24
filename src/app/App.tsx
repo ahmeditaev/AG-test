@@ -23,6 +23,7 @@ import {categoriesSelector} from "../redux/Categories";
 import {visibilityFilterSelector} from "../redux/Filters";
 
 import './App.scss';
+import {ICity} from "../redux/Cities/models";
 
 const App: React.FC = () => {
   const productsState = useTypedSelector(productsSelector.getProductsState)
@@ -112,18 +113,21 @@ const App: React.FC = () => {
             <div className="card-list">
               {filteredProducts && !!filteredProducts.length ? filteredProducts.map((item: IProduct, idx: number) => {
                 const findCategoryById = categories && !!categories.length ?
-                    categories.find((category: ICategory) => item.category === category.id) : null
+                  categories.find((category: ICategory) => item.category === category.id) : null
+
+                const findCityById = cities && !!cities.length ?
+                  cities.find((city: ICity) => item.city === city.id) : null
 
                 return (
                   <CardItem
                     key={idx}
-                    city="London"
+                    city={findCityById ? findCityById.name : ''}
                     title={item.name}
                     category={findCategoryById ? findCategoryById.name : ''}
                     price={item.price}
                   />
                 )
-              }) : <NoDataFound />}
+              }) : <NoDataFound/>}
             </div>
           </div>
         </div>
