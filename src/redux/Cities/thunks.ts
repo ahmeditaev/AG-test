@@ -1,4 +1,4 @@
-import {Dispatch, Store} from "redux";
+import {Dispatch} from "redux";
 import {citiesActions as actions} from "./index";
 import {MAIN_API} from "../../constants/api";
 
