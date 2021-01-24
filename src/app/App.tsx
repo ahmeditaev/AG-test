@@ -21,9 +21,9 @@ import {productsSelector} from "../redux/Products";
 import {citiesSelector} from "../redux/Cities";
 import {categoriesSelector} from "../redux/Categories";
 import {visibilityFilterSelector} from "../redux/Filters";
+import {ICity} from "../redux/Cities/models";
 
 import './App.scss';
-import {ICity} from "../redux/Cities/models";
 
 const App: React.FC = () => {
   const productsState = useTypedSelector(productsSelector.getProductsState)
@@ -50,7 +50,7 @@ const App: React.FC = () => {
   }, [])
 
   if (loadingProducts || loadingCities || loadingCategories) {
-    return <div>loading...</div>
+    return <div className="spinner" />
   }
 
   if (!products || products.length === 0) {

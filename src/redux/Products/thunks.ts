@@ -11,7 +11,7 @@ const fetchProducts = () => async (dispatch: Dispatch) => {
     const parsedData = await res.json()
     setTimeout(() => {
       dispatch(actions.receiveProductsActionCreator(parsedData))
-    }, 5000)
+    }, 2000)
   } catch (err) {
     dispatch(actions.failureProductsActionCreator(err.message))
   }
