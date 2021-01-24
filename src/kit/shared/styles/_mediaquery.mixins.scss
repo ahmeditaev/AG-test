@@ -1,0 +1,19 @@
+//Media Desktop First
+
+@mixin max-width-1170 {
+  @media screen and (max-width: 1170px) {
+    @content
+  }
+}
+
+@mixin max-width-609 {
+  @media screen and (max-width: 609px) {
+    @content
+  }
+}
+
+@mixin max-width-480 {
+  @media screen and (max-width: 480px) {
+    @content
+  }
+}

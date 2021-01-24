@@ -1,4 +1,5 @@
 @import "./src/kit/shared/styles/variables";
+@import "./src/kit/shared/styles/mediaquery.mixins";
 
 .container {
   min-width: 320px;
@@ -8,12 +9,22 @@
 
 .content {
   display: flex;
-  //flex-wrap: wrap;
+  flex-wrap: wrap;
   padding: 50px 0 80px;
+  @include max-width-1170 {
+    padding: 50px 20px 80px;
+  }
+  @include max-width-480 {
+    padding: 20px 10px;
+  }
   .sidebar {
     max-width: 270px;
     width: 100%;
     margin-right: 30px;
+    @include max-width-480 {
+      max-width: 100%;
+      margin-right: 0;
+    }
   }
   .price-wrap {
     position: relative;
@@ -21,6 +32,13 @@
       position: absolute;
       right: 29px;
       bottom: -7px;
+      @include max-width-480 {
+        position: relative;
+        right: unset;
+        bottom: unset;
+        margin-top: 20px;
+        width: 100%;
+      }
     }
   }
   .reset-button {
@@ -37,4 +55,7 @@
   display: grid;
   grid-gap: 30px;
   grid-template-columns: repeat(auto-fit,minMax(270px,1fr));
+  @include max-width-480 {
+    grid-gap: 15px;
+  }
 }

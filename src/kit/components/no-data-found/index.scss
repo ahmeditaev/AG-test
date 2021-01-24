@@ -1,3 +1,5 @@
+@import './src/kit/shared/styles/mediaquery.mixins';
+
 .no-data-wrap {
   display: flex;
   align-items: center;
@@ -9,6 +11,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  @include max-width-609 {
+    position: unset;
+    top: unset;
+    left: unset;
+    transform: unset;
+  }
   > img {
     display: block;
     width: 150px;
